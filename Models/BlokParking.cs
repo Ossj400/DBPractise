@@ -7,8 +7,14 @@ using System.ComponentModel.DataAnnotations;
 namespace DBPractise.Models
 {
     [Table("Blok_Parking")]
-    class BlokParking
+    public class BlokParking
     {
+        [ForeignKey("Blok Id")]
+        public Blok IdBlok { get; set; }
+
+        [ForeignKey("Parking Id")]
+        public Parking IdParking { get; set; }
+
 
     }
 }

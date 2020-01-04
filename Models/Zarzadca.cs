@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace DBPractise.Models
 {
     [Table("Zarządca")]
-    class Zarzadca
+    public class Zarzadca
     {
         [Key, Column("Id zarządcy")]
         public int IdZarzadcy { get; set; }
@@ -20,7 +20,7 @@ namespace DBPractise.Models
         public string Nazwisko { get; set; }
 
         [ForeignKey("Id osiedla")]
-        public Osiedle osiedle { get; set; }
+        public Osiedle Osiedle { get; set; }
 
         [Required, Column("Zarobki")]
         public decimal Zarobki { get; set; }
