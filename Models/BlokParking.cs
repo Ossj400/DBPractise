@@ -9,12 +9,17 @@ namespace DBPractise.Models
     [Table("Blok_Parking")]
     public class BlokParking
     {
-        [ForeignKey("Blok Id")]
-        public Blok IdBlok { get; set; }
+        [Key,Column("Id")]
+        public int Id { get; set; }
+        
+        public int IdBlok { get; set; }
 
-        [ForeignKey("Parking Id")]
-        public Parking IdParking { get; set; }
+        public int IdParking { get; set; }
 
+        [ForeignKey("IdParking")]
+        public virtual Parking Parking { get; set; }
 
+        [ForeignKey("IdBlok")]
+        public virtual Blok Blok { get; set; }
     }
 }
