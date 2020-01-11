@@ -9,16 +9,16 @@ namespace DBPractise.Models
     [Table("Blok")]
     public class Blok
     {
-        [Key, Column("Id bloku")]
+        [Key, Column("Id_bloku")]
         public int IdBlk { get; set; }
 
-        [Required, Column("Numer bloku")]
+        [Required, Column("Numer_bloku")]
         public int NrBloku { get; set; }
 
         [Required, Column("Ulica")]
         public string Ulica { get; set; }
 
-        [ForeignKey("Id osiedla")]
+        [ForeignKey("Id_osiedla")]
         public Osiedle Osiedle { get; set; }
 
         [Column("Zarobki")]

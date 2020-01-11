@@ -9,19 +9,19 @@ namespace DBPractise.Models
     [Table("Osiedle")]
     public class Osiedle
     {    
-        [Key, Column("Id osiedla")]
+        [Key, Column("Id_osiedla")]
         public int Id_os { get; set; }
 
-        [Required, Column("Nazwa osiedla")]
+        [ Required, Column("Nazwa_osiedla")]
         public string Nazwa_os { get; set; }
 
-        [Column("Liczba mieszkańców")]
+        [Column("Liczba_mieszkańców")]
         public int Lb_Mieszk { get; set; }
 
-        [ForeignKey("Id zarządcy")]
+        [ForeignKey("Id_zarządcy")]
         public Zarzadca Zarzadca { get; set; }
 
-        [Column("Liczba bloków na wynajem")]
+        [Column("Liczba_bloków_na_wynajem")]
         public int Lb_blk_na_wynajem;   ////////// COMPUTED IN FlutentAPI
     }
 }

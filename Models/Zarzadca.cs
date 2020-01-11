@@ -10,7 +10,7 @@ namespace DBPractise.Models
     [Table("Zarządca")]
     public class Zarzadca
     {
-        [Key, Column("Id zarządcy")]
+        [Key, Column("Id_zarządcy")]
         public int IdZarzadcy { get; set; }
 
         [Required, Column("Imię")]
@@ -19,7 +19,7 @@ namespace DBPractise.Models
         [Required, Column("Nazwisko")]
         public string Nazwisko { get; set; }
 
-        [ForeignKey("Id osiedla")]
+        [ForeignKey("Id_osiedla")]
         public Osiedle Osiedle { get; set; }
 
         [Required, Column("Zarobki")]

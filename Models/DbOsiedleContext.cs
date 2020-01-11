@@ -19,7 +19,9 @@ namespace DBPractise.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-       //     modelBuilder.Entity<BlokParking>().HasNoKey();
+            modelBuilder.Entity<Parking>()
+                .Property(p => p.Lb_Miejsc_Nie_Przypis)
+                .HasComputedColumnSql("[Ilosc_Miejsc_Parkingowych]-[Ilosc_Przypisanych_Miejsc]");
         }
     }
 }
