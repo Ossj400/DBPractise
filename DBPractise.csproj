@@ -24,6 +24,18 @@
     <Compile Remove="Migrations\20200111145653_1.Designer.cs" />
     <Compile Remove="Migrations\20200111150547_1.cs" />
     <Compile Remove="Migrations\20200111150547_1.Designer.cs" />
+    <Compile Remove="Migrations\20200111200852_1.cs" />
+    <Compile Remove="Migrations\20200111200852_1.Designer.cs" />
+    <Compile Remove="Migrations\20200111213703_1.cs" />
+    <Compile Remove="Migrations\20200111213703_1.Designer.cs" />
+    <Compile Remove="Migrations\20200111214422_21.cs" />
+    <Compile Remove="Migrations\20200111214422_21.Designer.cs" />
+    <Compile Remove="Migrations\20200111222529_21.cs" />
+    <Compile Remove="Migrations\20200111222529_21.Designer.cs" />
+    <Compile Remove="Migrations\20200111222756_21.cs" />
+    <Compile Remove="Migrations\20200111222756_21.Designer.cs" />
+    <Compile Remove="Migrations\20200111222844_21.cs" />
+    <Compile Remove="Migrations\20200111222844_21.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +49,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

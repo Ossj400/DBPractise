@@ -1,0 +1,700 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace DBPractise.Migrations
+{
+    public partial class _1 : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Parking",
+                columns: table => new
+                {
+                    Id_parkingu = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ilosc_Miejsc_Parkingowych = table.Column<int>(nullable: false),
+                    Ilosc_Przypisanych_Miejsc = table.Column<int>(nullable: false),
+                    Ilosc_Miejsc_Dla_Inwalidow = table.Column<int>(nullable: false),
+                    Lb_Miejsc_Nie_Przypis = table.Column<int>(nullable: false, computedColumnSql: "[Ilosc_Miejsc_Parkingowych]-[Ilosc_Przypisanych_Miejsc]")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parking", x => x.Id_parkingu);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blok_Parking",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdBlok = table.Column<int>(nullable: false),
+                    IdParking = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blok_Parking", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blok_Parking_Parking_IdParking",
+                        column: x => x.IdParking,
+                        principalTable: "Parking",
+                        principalColumn: "Id_parkingu",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blok",
+                columns: table => new
+                {
+                    Id_bloku = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Numer_bloku = table.Column<int>(nullable: false),
+                    Ulica = table.Column<string>(nullable: false),
+                    Id_osiedla = table.Column<int>(nullable: true),
+                    Zarobki = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blok", x => x.Id_bloku);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Zarządca",
+                columns: table => new
+                {
+                    Id_zarządcy = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Imię = table.Column<string>(nullable: false),
+                    Nazwisko = table.Column<string>(nullable: false),
+                    Id_osiedla = table.Column<int>(nullable: true),
+                    Zarobki = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zarządca", x => x.Id_zarządcy);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Osiedle",
+                columns: table => new
+                {
+                    Id_osiedla = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nazwa_osiedla = table.Column<string>(nullable: false),
+                    Liczba_mieszkańców = table.Column<int>(nullable: false),
+                    Id_zarządcy = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Osiedle", x => x.Id_osiedla);
+                    table.ForeignKey(
+                        name: "FK_Osiedle_Zarządca_Id_zarządcy",
+                        column: x => x.Id_zarządcy,
+                        principalTable: "Zarządca",
+                        principalColumn: "Id_zarządcy",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Blok",
+                columns: new[] { "Id_bloku", "Id_osiedla", "Numer_bloku", "Ulica", "Zarobki" },
+                values: new object[,]
+                {
+                    { 1, null, 1, "Ogrodowa", 32947m },
+                    { 73, null, 73, "Mariacka", 36952m },
+                    { 72, null, 72, "Małachowskiego", 10523m },
+                    { 71, null, 71, "Wiejska", 28715m },
+                    { 70, null, 70, "Hrubieszowska", 3744m },
+                    { 69, null, 69, "Chorzowska", 41391m },
+                    { 68, null, 68, "Senatorska", 46252m },
+                    { 67, null, 67, "Piwna", 26817m },
+                    { 66, null, 66, "Rajska", 12026m },
+                    { 65, null, 65, "Jezuicka", 1541m },
+                    { 64, null, 64, "Bielska", 16907m },
+                    { 63, null, 63, "Lipowa", 43871m },
+                    { 62, null, 62, "Zamkowa", 2434m },
+                    { 61, null, 61, "Garbarska", 16569m },
+                    { 60, null, 60, "Zamkowa", 1658m },
+                    { 59, null, 59, "Dworcowa", 40503m },
+                    { 58, null, 58, "Karpacka", 37562m },
+                    { 57, null, 57, "Narutowicza", 17527m },
+                    { 56, null, 56, "Hrubieszowska", 30501m },
+                    { 55, null, 55, "Pijarska", 49902m },
+                    { 54, null, 54, "Akademicka", 53395m },
+                    { 53, null, 53, "Akademicka", 15793m },
+                    { 75, null, 75, "Zamkowa", 47451m },
+                    { 52, null, 52, "Krasińskiego", 51895m },
+                    { 76, null, 76, "Siemianowicka", 34799m },
+                    { 78, null, 78, "Garbarska", 27693m },
+                    { 99, null, 99, "Małachowskiego", 33918m },
+                    { 98, null, 98, "Pijarska", 31797m },
+                    { 97, null, 97, "Dworcowa", 1885m },
+                    { 96, null, 96, "Fabryczna", 26068m },
+                    { 95, null, 95, "Fabryczna", 42481m },
+                    { 94, null, 94, "Rajska", 30074m },
+                    { 93, null, 93, "Rajska", 39369m },
+                    { 92, null, 92, "Mariacka", 8069m },
+                    { 91, null, 91, "Sienna", 38615m },
+                    { 90, null, 90, "Małachowskiego", 47237m },
+                    { 89, null, 89, "Mochnackiego", 15573m },
+                    { 88, null, 88, "Wiejska", 32841m },
+                    { 87, null, 87, "Wiejska", 34781m },
+                    { 86, null, 86, "Akademicka", 10194m },
+                    { 85, null, 85, "Mickiewicza", 39523m },
+                    { 84, null, 84, "Mickiewicza", 15294m },
+                    { 83, null, 83, "Hrubieszowska", 4830m },
+                    { 82, null, 82, "Narutowicza", 33450m },
+                    { 81, null, 81, "Narutowicza", 47112m },
+                    { 80, null, 80, "Józefczaka", 21895m },
+                    { 79, null, 79, "Akademicka", 47152m },
+                    { 77, null, 77, "Zamkowa", 17749m },
+                    { 51, null, 51, "Jezuicka", 399m },
+                    { 74, null, 74, "Mochnackiego", 29620m },
+                    { 49, null, 49, "Ogrodowa", 19111m },
+                    { 23, null, 23, "Kamienna", 27832m },
+                    { 22, null, 22, "Chorzowska", 5706m },
+                    { 21, null, 21, "Wiedźmińska", 35837m },
+                    { 20, null, 20, "Bielska", 41040m },
+                    { 19, null, 19, "Pijarska", 24644m },
+                    { 18, null, 18, "Siemianowicka", 4454m },
+                    { 17, null, 17, "Narutowicza", 11450m },
+                    { 16, null, 16, "Mariacka", 3472m },
+                    { 15, null, 15, "Chmielna", 57512m },
+                    { 14, null, 14, "Małachowskiego", 55164m },
+                    { 24, null, 24, "Lipowa", 41109m },
+                    { 13, null, 13, "Akademicka", 22970m },
+                    { 11, null, 11, "Witosa", 44802m },
+                    { 10, null, 10, "Rajska", 31656m },
+                    { 9, null, 9, "Karpacka", 25775m },
+                    { 8, null, 8, "Małachowskiego", 2038m },
+                    { 7, null, 7, "Kamienna", 28751m },
+                    { 6, null, 6, "Karpacka", 8336m },
+                    { 5, null, 5, "Mochnackiego", 43265m },
+                    { 4, null, 4, "Krasińskiego", 56585m },
+                    { 3, null, 3, "Sienna", 30685m },
+                    { 50, null, 50, "Chmielna", 32774m },
+                    { 12, null, 12, "Mariacka", 12720m },
+                    { 25, null, 25, "Garbarska", 39598m },
+                    { 2, null, 2, "Chorzowska", 15905m },
+                    { 42, null, 42, "Wiedźmińska", 21223m },
+                    { 48, null, 48, "Dworcowa", 56366m },
+                    { 47, null, 47, "Akademicka", 11m },
+                    { 46, null, 46, "Pijarska", 21136m },
+                    { 45, null, 45, "Uniwersytecka", 11078m },
+                    { 44, null, 44, "Pijarska", 26032m },
+                    { 43, null, 43, "Lipowa", 57904m },
+                    { 26, null, 26, "Krasińskiego", 31161m },
+                    { 41, null, 41, "Sienna", 21824m },
+                    { 40, null, 40, "Pijarska", 18088m },
+                    { 38, null, 38, "Balonowa", 37402m },
+                    { 39, null, 39, "Wiedźmińska", 25097m },
+                    { 36, null, 36, "Narutowicza", 55686m },
+                    { 35, null, 35, "Rajska", 49714m },
+                    { 34, null, 34, "Dworcowa", 43930m },
+                    { 33, null, 33, "Sienna", 44951m },
+                    { 32, null, 32, "Narutowicza", 16627m },
+                    { 31, null, 31, "Siemianowicka", 26042m },
+                    { 30, null, 30, "Garbarska", 58857m },
+                    { 29, null, 29, "Małachowskiego", 32317m },
+                    { 28, null, 28, "Balonowa", 45452m },
+                    { 27, null, 27, "Kamienna", 36591m },
+                    { 37, null, 37, "Chmielna", 7623m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Osiedle",
+                columns: new[] { "Id_osiedla", "Id_zarządcy", "Liczba_mieszkańców", "Nazwa_osiedla" },
+                values: new object[,]
+                {
+                    { 66, null, 9249, "Miechowice" },
+                    { 64, null, 10022, "Centrum" },
+                    { 65, null, 7972, "Kaliska" },
+                    { 67, null, 8075, "Centrum" },
+                    { 51, null, 9146, "Miechowice" },
+                    { 69, null, 3769, "Hubala" },
+                    { 70, null, 10396, "Miechowice" },
+                    { 71, null, 5797, "Bazie" },
+                    { 72, null, 485, "Wojkowice" },
+                    { 68, null, 1135, "Bobrek" },
+                    { 63, null, 3461, "Miechowice" },
+                    { 52, null, 6127, "Batorego" },
+                    { 61, null, 6579, "Karb" },
+                    { 60, null, 918, "Bazie" },
+                    { 59, null, 2526, "Miechowice" },
+                    { 58, null, 8804, "Centrum" },
+                    { 57, null, 1203, "Karb" },
+                    { 56, null, 5653, "Centrum" },
+                    { 55, null, 5820, "Karb" },
+                    { 54, null, 1653, "Miechowice" },
+                    { 53, null, 8719, "Miechowice" },
+                    { 73, null, 5273, "Karb" },
+                    { 62, null, 8664, "Orkan" },
+                    { 74, null, 8174, "Karb" },
+                    { 86, null, 3654, "Bazie" },
+                    { 76, null, 7657, "Kaliska" },
+                    { 98, null, 10558, "Antonin" },
+                    { 97, null, 3513, "Hubala" },
+                    { 96, null, 10903, "Miechowice" },
+                    { 95, null, 7035, "Bobrek" },
+                    { 94, null, 4573, "Szombierki" },
+                    { 93, null, 8839, "Kaliska" },
+                    { 92, null, 8842, "Gwiazdy" },
+                    { 91, null, 10848, "Gwiazdy" },
+                    { 90, null, 3622, "Wojkowice" },
+                    { 89, null, 9191, "Karb" },
+                    { 88, null, 4571, "Batorego" },
+                    { 87, null, 381, "Centrum" },
+                    { 85, null, 754, "Bazie" },
+                    { 84, null, 1874, "Orkan" },
+                    { 83, null, 10798, "Antonin" },
+                    { 82, null, 9493, "Manhattan" },
+                    { 81, null, 4755, "Karb" },
+                    { 80, null, 5774, "Miechowice" },
+                    { 79, null, 4828, "Antonin" },
+                    { 78, null, 6641, "Miechowice" },
+                    { 77, null, 1986, "Karb" },
+                    { 75, null, 7534, "Manhattan" },
+                    { 50, null, 4568, "Gwiazdy" },
+                    { 99, null, 3880, "Wojkowice" },
+                    { 48, null, 3689, "Gwiazdy" },
+                    { 22, null, 3275, "Wojkowice" },
+                    { 21, null, 2301, "Miechowice" },
+                    { 20, null, 1069, "Karb" },
+                    { 19, null, 10044, "Kaliska" },
+                    { 18, null, 8066, "Witosa" },
+                    { 17, null, 8395, "Karb" },
+                    { 16, null, 6550, "Kaliska" },
+                    { 15, null, 2115, "Hubala" },
+                    { 14, null, 9450, "Gwiazdy" },
+                    { 12, null, 9708, "Manhattan" },
+                    { 11, null, 2910, "Kaliska" },
+                    { 10, null, 2904, "Antonin" },
+                    { 9, null, 726, "Kaliska" },
+                    { 8, null, 3552, "Bazie" },
+                    { 7, null, 2444, "Batorego" },
+                    { 6, null, 10932, "Miechowice" },
+                    { 5, null, 7802, "Szombierki" },
+                    { 4, null, 4797, "Miechowice" },
+                    { 3, null, 8120, "Bobrek" },
+                    { 2, null, 2558, "Centrum" },
+                    { 1, null, 9565, "Manhattan" },
+                    { 23, null, 3760, "Miechowice" },
+                    { 24, null, 7423, "Witosa" },
+                    { 13, null, 2080, "Batorego" },
+                    { 26, null, 10042, "Orkan" },
+                    { 25, null, 3486, "Wojkowice" },
+                    { 47, null, 2700, "Wojkowice" },
+                    { 46, null, 8148, "Kaliska" },
+                    { 45, null, 6611, "Wojkowice" },
+                    { 44, null, 1200, "Karb" },
+                    { 43, null, 8222, "Witosa" },
+                    { 42, null, 1574, "Hubala" },
+                    { 41, null, 4736, "Bobrek" },
+                    { 40, null, 7550, "Manhattan" },
+                    { 39, null, 1576, "Bobrek" },
+                    { 38, null, 8646, "Gwiazdy" },
+                    { 49, null, 9370, "Karb" },
+                    { 36, null, 6392, "Antonin" },
+                    { 37, null, 9599, "Witosa" },
+                    { 28, null, 6271, "Wojkowice" },
+                    { 29, null, 1915, "Miechowice" },
+                    { 30, null, 6249, "Orkan" },
+                    { 31, null, 7068, "Manhattan" },
+                    { 27, null, 4346, "Centrum" },
+                    { 33, null, 10430, "Bazie" },
+                    { 34, null, 2425, "Hubala" },
+                    { 35, null, 8259, "Orkan" },
+                    { 32, null, 505, "Batorego" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Parking",
+                columns: new[] { "Id_parkingu", "Ilosc_Miejsc_Dla_Inwalidow", "Ilosc_Miejsc_Parkingowych", "Ilosc_Przypisanych_Miejsc" },
+                values: new object[,]
+                {
+                    { 65, 1, 31, 16 },
+                    { 72, 4, 14, 4 },
+                    { 71, 2, 36, 23 },
+                    { 70, 4, 31, 4 },
+                    { 69, 2, 62, 30 },
+                    { 68, 0, 57, 46 },
+                    { 73, 3, 70, 41 },
+                    { 67, 3, 78, 77 },
+                    { 66, 0, 52, 31 },
+                    { 64, 0, 68, 9 },
+                    { 58, 4, 33, 9 },
+                    { 62, 2, 23, 19 },
+                    { 61, 1, 27, 20 },
+                    { 60, 3, 20, 10 },
+                    { 59, 1, 88, 54 },
+                    { 57, 3, 43, 37 },
+                    { 56, 3, 6, 1 },
+                    { 55, 3, 33, 10 },
+                    { 54, 1, 99, 9 },
+                    { 53, 3, 34, 19 },
+                    { 74, 4, 11, 6 },
+                    { 63, 0, 2, 1 },
+                    { 52, 0, 6, 3 },
+                    { 99, 4, 35, 17 },
+                    { 77, 2, 19, 13 },
+                    { 51, 0, 39, 38 },
+                    { 98, 1, 79, 49 },
+                    { 97, 3, 13, 8 },
+                    { 96, 3, 98, 39 },
+                    { 95, 4, 15, 7 },
+                    { 94, 3, 14, 2 },
+                    { 93, 2, 19, 1 },
+                    { 92, 0, 72, 37 },
+                    { 91, 3, 6, 3 },
+                    { 90, 3, 48, 41 },
+                    { 76, 1, 16, 15 },
+                    { 89, 0, 45, 29 },
+                    { 87, 0, 30, 0 },
+                    { 86, 4, 16, 12 },
+                    { 85, 0, 14, 9 },
+                    { 84, 0, 47, 35 },
+                    { 83, 1, 82, 70 },
+                    { 82, 4, 88, 17 },
+                    { 81, 2, 62, 12 },
+                    { 80, 1, 11, 6 },
+                    { 79, 1, 3, 1 },
+                    { 78, 3, 56, 20 },
+                    { 88, 1, 71, 36 },
+                    { 50, 4, 33, 29 },
+                    { 75, 2, 83, 15 },
+                    { 48, 2, 10, 0 },
+                    { 21, 1, 41, 17 },
+                    { 20, 2, 43, 10 },
+                    { 19, 0, 83, 2 },
+                    { 18, 3, 1, 0 },
+                    { 17, 1, 48, 45 },
+                    { 16, 2, 64, 49 },
+                    { 15, 4, 18, 17 },
+                    { 14, 2, 71, 42 },
+                    { 49, 2, 69, 66 },
+                    { 12, 4, 73, 31 },
+                    { 11, 0, 85, 36 },
+                    { 10, 1, 71, 14 },
+                    { 9, 2, 95, 86 },
+                    { 8, 1, 32, 2 },
+                    { 7, 0, 70, 27 },
+                    { 6, 3, 39, 24 },
+                    { 5, 1, 89, 9 },
+                    { 4, 2, 59, 7 },
+                    { 3, 4, 54, 26 },
+                    { 2, 1, 22, 18 },
+                    { 1, 3, 8, 0 },
+                    { 22, 1, 65, 23 },
+                    { 23, 0, 41, 26 },
+                    { 13, 2, 2, 0 },
+                    { 25, 0, 69, 43 },
+                    { 24, 4, 75, 57 },
+                    { 46, 1, 92, 87 },
+                    { 45, 0, 89, 34 },
+                    { 44, 4, 11, 3 },
+                    { 43, 3, 94, 32 },
+                    { 42, 4, 79, 57 },
+                    { 41, 1, 63, 0 },
+                    { 40, 4, 48, 21 },
+                    { 39, 3, 84, 70 },
+                    { 38, 4, 93, 86 },
+                    { 37, 0, 57, 19 },
+                    { 47, 0, 11, 2 },
+                    { 35, 4, 64, 56 },
+                    { 34, 2, 51, 7 },
+                    { 33, 0, 92, 54 },
+                    { 32, 0, 59, 21 },
+                    { 31, 1, 18, 17 },
+                    { 30, 4, 72, 37 },
+                    { 29, 3, 66, 62 },
+                    { 28, 0, 60, 42 },
+                    { 27, 0, 66, 11 },
+                    { 26, 3, 14, 6 },
+                    { 36, 2, 71, 68 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Zarządca",
+                columns: new[] { "Id_zarządcy", "Id_osiedla", "Imię", "Nazwisko", "Zarobki" },
+                values: new object[,]
+                {
+                    { 65, null, "Gerard", "Betliński", 6540m },
+                    { 66, null, "Marek", "Jemielniak", 7520m },
+                    { 67, null, "Mirosława", "Kaniewski", 10790m },
+                    { 72, null, "Janusz", "Jabłonowski", 13100m },
+                    { 69, null, "Marianna", "Aleksandrowicz", 14930m },
+                    { 70, null, "Seweryn", "Olejnik", 3670m },
+                    { 71, null, "Beata", "Ziemczonek", 9600m },
+                    { 64, null, "Eugeniusz", "Białas", 13080m },
+                    { 68, null, "Janina", "Warius", 6900m },
+                    { 63, null, "Beata", "Kononowicz", 5860m },
+                    { 58, null, "Aleksy", "Osmanowski", 6750m },
+                    { 61, null, "Barbara", "Osmanowski", 12180m },
+                    { 60, null, "Krystyna", "Adamowicz", 3880m },
+                    { 59, null, "Maria", "Smith", 4840m },
+                    { 57, null, "Andrzej", "Kotynia", 8710m },
+                    { 56, null, "Mirosława", "Fiodor", 14220m },
+                    { 55, null, "Erwin", "Betliński", 8720m },
+                    { 54, null, "Józef", "Rokita", 3880m },
+                    { 53, null, "Mieczysława", "Brzezowicz", 6310m },
+                    { 52, null, "Zygmunt", "Olejnik", 8480m },
+                    { 62, null, "Piotr", "Fiodorowicz", 10370m },
+                    { 73, null, "Gerard", "Brzezowicz", 6430m },
+                    { 97, null, "Bartosz", "Alexandrowicz", 4930m },
+                    { 75, null, "Jerzy", "Kowal", 7920m },
+                    { 51, null, "Erwin", "Fiodorowicz", 10540m },
+                    { 96, null, "Elżbieta", "Kiepski", 13890m },
+                    { 95, null, "Gerard", "Betliński", 12610m },
+                    { 94, null, "Karolina", "Kapturowicz", 13960m },
+                    { 93, null, "Gerard", "Betlej", 4780m },
+                    { 92, null, "Artur", "Gogolewski", 11260m },
+                    { 91, null, "Konrad", "Nowicki", 13970m },
+                    { 90, null, "Wilhelm", "Suchodolski", 13830m },
+                    { 89, null, "Artur", "Warius", 9590m },
+                    { 88, null, "Iwona", "Pulak", 6770m },
+                    { 74, null, "Janusz", "Ziemczonek", 9370m },
+                    { 87, null, "Gerard", "Nowicki", 6120m },
+                    { 85, null, "Geralt", "Kiepski", 14200m },
+                    { 84, null, "Konrad", "Białecki", 12630m },
+                    { 83, null, "Aleksy", "Jabłonowski", 7280m },
+                    { 82, null, "Bartosz", "Fikus", 5770m },
+                    { 81, null, "Eugeniusz", "Polok", 3910m },
+                    { 80, null, "Longin", "Brzezowicz", 7920m },
+                    { 79, null, "Maria", "Kot", 14820m },
+                    { 78, null, "Iwona", "Ziemczonek", 8630m },
+                    { 77, null, "Zbigniew", "Brzezowicz", 9410m },
+                    { 76, null, "Jan", "Godlewski", 6860m },
+                    { 86, null, "Barbara", "Kowal", 11270m },
+                    { 50, null, "Geralt", "Piotrowicz", 5440m },
+                    { 25, null, "Artur", "Adamowski", 9320m },
+                    { 48, null, "Aleksy", "Fiodorowicz", 7360m },
+                    { 20, null, "Ingeborga", "Nowicki", 6410m },
+                    { 19, null, "Beata", "Piotrowicz", 13010m },
+                    { 18, null, "Andrzej", "Rokita", 5160m },
+                    { 17, null, "Józef", "Polok", 6000m },
+                    { 16, null, "Wacław", "Betlej", 6800m },
+                    { 15, null, "Seweryn", "Brzezowicz", 14440m },
+                    { 14, null, "Anna", "Betliński", 11650m },
+                    { 13, null, "Czesława", "Kononowicz", 11400m },
+                    { 12, null, "Władysław", "Pulak", 8830m },
+                    { 11, null, "Marek", "Pulak", 7780m },
+                    { 10, null, "Wacław", "Kononowicz", 9750m },
+                    { 9, null, "Manfreda", "Jabłkowski", 10460m },
+                    { 8, null, "Ernest", "Nowicki", 12750m },
+                    { 7, null, "Klemens", "Adamowicz", 4040m },
+                    { 6, null, "Ingeborga", "Adamowicz", 4690m },
+                    { 5, null, "Zbigniew", "Gogolewski", 11170m },
+                    { 4, null, "Ingeborga", "Godlewski", 12710m },
+                    { 3, null, "Artur", "Hernik", 10690m },
+                    { 2, null, "Iwona", "Adamowicz", 4750m },
+                    { 1, null, "Ingeborga", "Mońka", 9270m },
+                    { 98, null, "Longin", "Kotynia", 5000m },
+                    { 21, null, "Wacław", "Raczkowiak", 7230m },
+                    { 22, null, "Wacław", "Smith", 11870m },
+                    { 23, null, "Ernest", "Kot", 13660m },
+                    { 24, null, "Anna", "Smith", 10940m },
+                    { 47, null, "Jan", "Jabłonowski", 4240m },
+                    { 46, null, "Władysław", "Jabłonowski", 6480m },
+                    { 45, null, "Eugeniusz", "Betliński", 12990m },
+                    { 44, null, "Barbara", "Betlej", 9360m },
+                    { 43, null, "Beata", "Fikus", 5850m },
+                    { 42, null, "Gustaw", "Betliński", 10450m },
+                    { 41, null, "Józef", "Fiodorowicz", 12940m },
+                    { 40, null, "Idzik", "Aleksandrowicz", 8650m },
+                    { 39, null, "Stanisław", "Jemielniak", 11570m },
+                    { 38, null, "Władysław", "Fikus", 6160m },
+                    { 49, null, "Andrzej", "Kotynia", 14190m },
+                    { 37, null, "Iwona", "Filipczak", 6500m },
+                    { 35, null, "Wacław", "Fiodorowicz", 10730m },
+                    { 34, null, "Piotr", "Ziemczonek", 14770m },
+                    { 33, null, "Gustaw", "Ziemczonek", 13870m },
+                    { 32, null, "Anna", "Kononowicz", 4360m },
+                    { 31, null, "Zbigniew", "Kaniewski", 14360m },
+                    { 30, null, "Andrzej", "Fikus", 8500m },
+                    { 29, null, "Lechosław", "Jemielniak", 13980m },
+                    { 28, null, "Konrad", "Wałęsa", 6030m },
+                    { 27, null, "Barbara", "Fiodorowicz", 7120m },
+                    { 26, null, "Jerzy", "Kiepski", 8980m },
+                    { 36, null, "Marianna", "Kowal", 7220m },
+                    { 99, null, "Zygmunt", "Suchodolski", 5130m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Blok_Parking",
+                columns: new[] { "Id", "IdBlok", "IdParking" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 72, 72, 72 },
+                    { 71, 71, 71 },
+                    { 70, 70, 70 },
+                    { 69, 69, 69 },
+                    { 68, 68, 68 },
+                    { 67, 67, 67 },
+                    { 66, 66, 66 },
+                    { 65, 65, 65 },
+                    { 64, 64, 64 },
+                    { 63, 63, 63 },
+                    { 62, 62, 62 },
+                    { 61, 61, 61 },
+                    { 60, 60, 60 },
+                    { 59, 59, 59 },
+                    { 58, 58, 58 },
+                    { 57, 57, 57 },
+                    { 56, 56, 56 },
+                    { 55, 55, 55 },
+                    { 54, 54, 54 },
+                    { 53, 53, 53 },
+                    { 52, 52, 52 },
+                    { 73, 73, 73 },
+                    { 51, 51, 51 },
+                    { 74, 74, 74 },
+                    { 76, 76, 76 },
+                    { 97, 97, 97 },
+                    { 96, 96, 96 },
+                    { 95, 95, 95 },
+                    { 94, 94, 94 },
+                    { 93, 93, 93 },
+                    { 92, 92, 92 },
+                    { 91, 91, 91 },
+                    { 90, 90, 90 },
+                    { 89, 89, 89 },
+                    { 88, 88, 88 },
+                    { 87, 87, 87 },
+                    { 86, 86, 86 },
+                    { 85, 85, 85 },
+                    { 84, 84, 84 },
+                    { 83, 83, 83 },
+                    { 82, 82, 82 },
+                    { 81, 81, 81 },
+                    { 80, 80, 80 },
+                    { 79, 79, 79 },
+                    { 78, 78, 78 },
+                    { 77, 77, 77 },
+                    { 75, 75, 75 },
+                    { 98, 98, 98 },
+                    { 50, 50, 50 },
+                    { 48, 48, 48 },
+                    { 22, 22, 22 },
+                    { 21, 21, 21 },
+                    { 20, 20, 20 },
+                    { 19, 19, 19 },
+                    { 18, 18, 18 },
+                    { 17, 17, 17 },
+                    { 16, 16, 16 },
+                    { 15, 15, 15 },
+                    { 14, 14, 14 },
+                    { 13, 13, 13 },
+                    { 12, 12, 12 },
+                    { 11, 11, 11 },
+                    { 10, 10, 10 },
+                    { 9, 9, 9 },
+                    { 8, 8, 8 },
+                    { 7, 7, 7 },
+                    { 6, 6, 6 },
+                    { 5, 5, 5 },
+                    { 4, 4, 4 },
+                    { 3, 3, 3 },
+                    { 2, 2, 2 },
+                    { 23, 23, 23 },
+                    { 49, 49, 49 },
+                    { 24, 24, 24 },
+                    { 26, 26, 26 },
+                    { 47, 47, 47 },
+                    { 46, 46, 46 },
+                    { 45, 45, 45 },
+                    { 44, 44, 44 },
+                    { 43, 43, 43 },
+                    { 42, 42, 42 },
+                    { 41, 41, 41 },
+                    { 40, 40, 40 },
+                    { 39, 39, 39 },
+                    { 38, 38, 38 },
+                    { 37, 37, 37 },
+                    { 36, 36, 36 },
+                    { 35, 35, 35 },
+                    { 34, 34, 34 },
+                    { 33, 33, 33 },
+                    { 32, 32, 32 },
+                    { 31, 31, 31 },
+                    { 30, 30, 30 },
+                    { 29, 29, 29 },
+                    { 28, 28, 28 },
+                    { 27, 27, 27 },
+                    { 25, 25, 25 },
+                    { 99, 99, 99 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blok_Id_osiedla",
+                table: "Blok",
+                column: "Id_osiedla");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blok_Parking_IdBlok",
+                table: "Blok_Parking",
+                column: "IdBlok");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blok_Parking_IdParking",
+                table: "Blok_Parking",
+                column: "IdParking");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Osiedle_Id_zarządcy",
+                table: "Osiedle",
+                column: "Id_zarządcy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Zarządca_Id_osiedla",
+                table: "Zarządca",
+                column: "Id_osiedla");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Blok_Parking_Blok_IdBlok",
+                table: "Blok_Parking",
+                column: "IdBlok",
+                principalTable: "Blok",
+                principalColumn: "Id_bloku",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Blok_Osiedle_Id_osiedla",
+                table: "Blok",
+                column: "Id_osiedla",
+                principalTable: "Osiedle",
+                principalColumn: "Id_osiedla",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Zarządca_Osiedle_Id_osiedla",
+                table: "Zarządca",
+                column: "Id_osiedla",
+                principalTable: "Osiedle",
+                principalColumn: "Id_osiedla",
+                onDelete: ReferentialAction.Restrict);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Zarządca_Osiedle_Id_osiedla",
+                table: "Zarządca");
+
+            migrationBuilder.DropTable(
+                name: "Blok_Parking");
+
+            migrationBuilder.DropTable(
+                name: "Blok");
+
+            migrationBuilder.DropTable(
+                name: "Parking");
+
+            migrationBuilder.DropTable(
+                name: "Osiedle");
+
+            migrationBuilder.DropTable(
+                name: "Zarządca");
+        }
+    }
+}
