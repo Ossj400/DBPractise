@@ -21,7 +21,7 @@ namespace DBPractise.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            for (int i = 1; i < 100; i++)
+            for (int i = 1; i < 6; i++)
             { 
                 var os = new Osiedle()
                 {
@@ -105,6 +105,9 @@ namespace DBPractise.Models
             modelBuilder.Entity<Parking>()
                 .Property(p => p.Lb_Miejsc_Nie_Przypis)
                 .HasComputedColumnSql("[Ilosc_Miejsc_Parkingowych]-[Ilosc_Przypisanych_Miejsc]");
+
+
         }
+
     }
 }
